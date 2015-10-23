@@ -1,4 +1,4 @@
-// LSL script generated - patched Render.hs (0.1.6.2): LSLScripts.nPose LMLG chains plugin.lslp Sun Sep 27 10:54:57 Mitteleuropäische Sommerzeit 2015
+// LSL script generated - patched Render.hs (0.1.6.2): LSLScripts.nPose LMLG chains plugin.lslp Fri Oct 23 22:33:55 Mitteleuropäische Sommerzeit 2015
 // Started at: 04.05.2013 17:04:00
 // Authors: XandrineX and Perl Nakajima
 // Modified from Pfil Payne: 
@@ -195,7 +195,7 @@ default {
         gListenLGHandle = -1;
         integer number_of_prims = llGetNumberOfPrims();
         integer i;
-        for (i = 2; i < number_of_prims + 1; ++i) {
+        for (i = 1; i < number_of_prims + 1; ++i) {
             string desc = llList2String(llGetLinkPrimitiveParams(i,[28]),0);
             if (desc != "" && desc != "(No description)") {
                 if (-1 == llListFindList(gPrimIDs,[desc])) {
