@@ -19,15 +19,15 @@ modified by pfil payne
 1.  Include the `nPose LM/LG chains plugin` script in the main build.
 2.  Add the chain points also to the build.
 3.  Make the description of each chain point unique so they can be referred to in nPose notecard.
-4.  Make a `SET` card and use `SATMSG` for telling the plugin to send chains and where they should go when someone sits this seat.
-  1. `SATMSG` in this form: `SATMSG|2732|leftloop~lcuff~rightloop~rcuff`
-    1. The arb num 2732 is what the chains plugin is looking for and is interpreted as a command to send chains.
-    2. The next is a list of chain point~cuff point matching pairs.  In the above `SATMSG` the pairs are as follows:  leftloop to lcuff, and rightloop to rcuff.
-    3. Chains are drawn from the chain point to the designated cuff (or vice versa). See references below for a list of cahin point names.
-5. Add a `NOTSATMSG` to drop chains when this person stands or changes pose sets.
-  1.  NOTSATMSG in this form: `SATMSG|2733|leftloop~rightloop`
-    1. The arb num 2733 is what the chains plugin is looking for and is interpreted as a command to stop chains.
-    2. The next is a list of chain point.  In the above `NOTSATMSG` the plugin simply stops the chains at the chain points listed.
+4.  Make a `SET` card and use `SATMSG` for telling the plugin to send chains and where they should go when someone sits this seat.  
+`SATMSG` in this form: `SATMSG|2732|leftloop~lcuff~rightloop~rcuff`
+  1. The arb num 2732 is what the chains plugin is looking for and is interpreted as a command to send chains.
+  2. The next is a list of chain point~cuff point matching pairs.  In the above `SATMSG` the pairs are as follows:  leftloop to lcuff, and rightloop to rcuff.
+  3. Chains are drawn from the chain point to the designated cuff (or vice versa). See references below for a list of cahin point names.
+5. Add a `NOTSATMSG` to drop chains when this person stands or changes pose sets.  
+  NOTSATMSG in this form: `SATMSG|2733|leftloop~rightloop`
+  1. The arb num 2733 is what the chains plugin is looking for and is interpreted as a command to stop chains.
+  2. The next is a list of chain point.  In the above `NOTSATMSG` the plugin simply stops the chains at the chain points listed.
 
 ### Chains in Props
 1. Include the `nPose LM/LG chains plugin` script in each prop intended to be used for chain points along with the prop plugin `nPose prop 0.1 (2.0 verified)`.
