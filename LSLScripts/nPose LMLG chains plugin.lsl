@@ -1,4 +1,4 @@
-// LSL script generated - patched Render.hs (0.1.6.2): LSLScripts.nPose LMLG chains plugin.lslp Fri Oct 23 22:33:55 Mitteleuropäische Sommerzeit 2015
+// LSL script generated: LSLScripts.nPose LMLG chains plugin.lslp Mon Nov 14 09:38:05 Mitteleuropäische Zeit 2016
 // Started at: 04.05.2013 17:04:00
 // Authors: XandrineX and Perl Nakajima
 // Modified from Pfil Payne: 
@@ -50,159 +50,159 @@ integer gTimerMode;
 // ============================================================
 list ListItemDelete(list mylist,string element_old){
     integer placeinlist = llListFindList(mylist,[element_old]);
-    if (placeinlist != -1) return llDeleteSubList(mylist,placeinlist,placeinlist);
+    if ((placeinlist != -1)) return llDeleteSubList(mylist,placeinlist,placeinlist);
     return mylist;
 }
 
 query_set_chains(key avatarKey,list items){
     integer itemLength = llGetListLength(items);
-    if (gListenLMHandle == -1) gListenLMHandle = llListen(-8888,"",NULL_KEY,"");
-    if (gListenLGHandle == -1) gListenLGHandle = llListen(-9119,"",NULL_KEY,"");
+    if ((gListenLMHandle == -1)) (gListenLMHandle = llListen(-8888,"",NULL_KEY,""));
+    if ((gListenLGHandle == -1)) (gListenLGHandle = llListen(-9119,"",NULL_KEY,""));
     integer i;
-    for (i = 0; i < itemLength; i += 2) {
+    for ((i = 0); (i < itemLength); (i += 2)) {
         string desc = llList2String(items,i);
         integer index = llListFindList(gPrimIDs,[desc]);
-        if (index == -1) {
+        if ((index == -1)) {
         }
         else  {
-            integer primId = llList2Integer(gPrimIDs,index + 1);
+            integer primId = llList2Integer(gPrimIDs,(index + 1));
             llLinkParticleSystem(primId,[]);
-            string mooring = llList2String(items,i + 1);
-            if (mooring != "") {
-                string lm_call = (string)avatarKey + mooring;
-                if (-1 == llListFindList(gLmCalls,[lm_call + " ok"])) {
+            string mooring = llList2String(items,(i + 1));
+            if ((mooring != "")) {
+                string lm_call = (((string)avatarKey) + mooring);
+                if ((-1 == llListFindList(gLmCalls,[(lm_call + " ok")]))) {
                     llWhisper(-8888,lm_call);
-                    index = llListFindList(gLM_TO_LG_MAPPINGS,[mooring]);
-                    if (index != -1) {
-                        string lgMooring = llList2String(gLM_TO_LG_MAPPINGS,index + 1);
+                    (index = llListFindList(gLM_TO_LG_MAPPINGS,[mooring]));
+                    if ((index != -1)) {
+                        string lgMooring = llList2String(gLM_TO_LG_MAPPINGS,(index + 1));
                         key primKey = llGetLinkKey(primId);
-                        llWhisper(-9119,"lockguard " + (string)avatarKey + " " + lgMooring + " texture " + gTexture + " size " + (string)gXsize + " " + (string)gYsize + " gravity " + (string)gGravity + " color " + (string)gRed + " " + (string)gGreen + " " + (string)gBlue + " life " + (string)gLife + " link " + (string)primKey + " ping");
-                        gSetChains += [desc,avatarKey,mooring,lgMooring];
+                        llWhisper(-9119,(((((((((((((((((((((("lockguard " + ((string)avatarKey)) + " ") + lgMooring) + " texture ") + gTexture) + " size ") + ((string)gXsize)) + " ") + ((string)gYsize)) + " gravity ") + ((string)gGravity)) + " color ") + ((string)gRed)) + " ") + ((string)gGreen)) + " ") + ((string)gBlue)) + " life ") + ((string)gLife)) + " link ") + ((string)primKey)) + " ping"));
+                        (gSetChains += [desc,avatarKey,mooring,lgMooring]);
                     }
                     else  {
-                        gSetChains += [desc,avatarKey,mooring,"-"];
+                        (gSetChains += [desc,avatarKey,mooring,"-"]);
                     }
-                    gLmCalls += [lm_call + " ok",primId];
-                    gMissingChainPoints += [desc];
+                    (gLmCalls += [(lm_call + " ok"),primId]);
+                    (gMissingChainPoints += [desc]);
                 }
             }
         }
     }
-    gLmCallsLength = llGetListLength(gLmCalls);
-    gTimerMode = 1;
+    (gLmCallsLength = llGetListLength(gLmCalls));
+    (gTimerMode = 1);
     llSetTimerEvent(3);
 }
 
 query_rem_chains(key avatarKey,list descriptions){
     integer length = llGetListLength(descriptions);
     integer i;
-    for (i = 0; i < length; i += 1) {
+    for ((i = 0); (i < length); (i += 1)) {
         string description = llList2String(descriptions,i);
         integer index = llListFindList(gPrimIDs,[description]);
-        if (index != -1) {
-            llLinkParticleSystem(llList2Integer(gPrimIDs,index + 1),[]);
+        if ((index != -1)) {
+            llLinkParticleSystem(llList2Integer(gPrimIDs,(index + 1)),[]);
         }
         else  {
         }
-        index = llListFindList(gSetChains,[description]);
-        if (~index) {
-            llWhisper(-9119,"lockguard " + (string)llList2Key(gSetChains,index + 1) + " " + llList2String(gSetChains,index + 3) + " unlink");
-            gSetChains = llDeleteSubList(gSetChains,index,index + 3);
+        (index = llListFindList(gSetChains,[description]));
+        if ((~index)) {
+            llWhisper(-9119,(((("lockguard " + ((string)llList2Key(gSetChains,(index + 1)))) + " ") + llList2String(gSetChains,(index + 3))) + " unlink"));
+            (gSetChains = llDeleteSubList(gSetChains,index,(index + 3)));
         }
-        gMissingChainPoints = ListItemDelete(gMissingChainPoints,description);
+        (gMissingChainPoints = ListItemDelete(gMissingChainPoints,description));
     }
 }
 
 update_chains(){
-    if (gListenLMHandle == -1) gListenLMHandle = llListen(-8888,"",NULL_KEY,"");
-    if (gListenLGHandle == -1) gListenLGHandle = llListen(-9119,"",NULL_KEY,"");
+    if ((gListenLMHandle == -1)) (gListenLMHandle = llListen(-8888,"",NULL_KEY,""));
+    if ((gListenLGHandle == -1)) (gListenLGHandle = llListen(-9119,"",NULL_KEY,""));
     integer length = llGetListLength(gSetChains);
     integer i;
-    for (i = 0; i < length; i += 4) {
+    for ((i = 0); (i < length); (i += 4)) {
         string desc = llList2String(gSetChains,i);
         integer index = llListFindList(gPrimIDs,[desc]);
-        integer primId = llList2Integer(gPrimIDs,index + 1);
-        string mooring = llList2String(gSetChains,i + 2);
-        string lm_call = (string)llList2Key(gSetChains,i + 1) + mooring;
+        integer primId = llList2Integer(gPrimIDs,(index + 1));
+        string mooring = llList2String(gSetChains,(i + 2));
+        string lm_call = (((string)llList2Key(gSetChains,(i + 1))) + mooring);
         llWhisper(-8888,lm_call);
-        string lgMooring = llList2String(gSetChains,i + 3);
-        if (lgMooring != "-") {
+        string lgMooring = llList2String(gSetChains,(i + 3));
+        if ((lgMooring != "-")) {
             key primKey = llGetLinkKey(primId);
-            llWhisper(-9119,"lockguard " + (string)llList2Key(gSetChains,i + 1) + " " + lgMooring + " texture " + gTexture + " size " + (string)gXsize + " " + (string)gYsize + " gravity " + (string)gGravity + " life " + (string)gLife + " color " + (string)gRed + " " + (string)gGreen + " " + (string)gBlue + " link " + (string)primKey + " ping");
+            llWhisper(-9119,(((((((((((((((((((((("lockguard " + ((string)llList2Key(gSetChains,(i + 1)))) + " ") + lgMooring) + " texture ") + gTexture) + " size ") + ((string)gXsize)) + " ") + ((string)gYsize)) + " gravity ") + ((string)gGravity)) + " life ") + ((string)gLife)) + " color ") + ((string)gRed)) + " ") + ((string)gGreen)) + " ") + ((string)gBlue)) + " link ") + ((string)primKey)) + " ping"));
         }
-        gLmCalls += [lm_call + " ok",primId];
+        (gLmCalls += [(lm_call + " ok"),primId]);
     }
-    gLmCallsLength = llGetListLength(gLmCalls);
-    gTimerMode = 1;
+    (gLmCallsLength = llGetListLength(gLmCalls));
+    (gTimerMode = 1);
     llSetTimerEvent(3);
 }
 
 control_chains(){
-    if (gListenLMHandle == -1) gListenLMHandle = llListen(-8888,"",NULL_KEY,"");
-    if (gListenLGHandle == -1) gListenLGHandle = llListen(-9119,"",NULL_KEY,"");
+    if ((gListenLMHandle == -1)) (gListenLMHandle = llListen(-8888,"",NULL_KEY,""));
+    if ((gListenLGHandle == -1)) (gListenLGHandle = llListen(-9119,"",NULL_KEY,""));
     integer length = llGetListLength(gMissingChainPoints);
     integer i2;
-    for (i2 = 0; i2 < length; i2 += 1) {
+    for ((i2 = 0); (i2 < length); (i2 += 1)) {
         string desc = llList2String(gMissingChainPoints,i2);
         integer i = llListFindList(gSetChains,[desc]);
         integer index = llListFindList(gPrimIDs,[desc]);
-        integer primId = llList2Integer(gPrimIDs,index + 1);
-        string mooring = llList2String(gSetChains,i + 2);
-        string lm_call = (string)llList2Key(gSetChains,i + 1) + mooring;
+        integer primId = llList2Integer(gPrimIDs,(index + 1));
+        string mooring = llList2String(gSetChains,(i + 2));
+        string lm_call = (((string)llList2Key(gSetChains,(i + 1))) + mooring);
         llWhisper(-8888,lm_call);
-        string lgMooring = llList2String(gSetChains,i + 3);
-        if (lgMooring != "-") {
+        string lgMooring = llList2String(gSetChains,(i + 3));
+        if ((lgMooring != "-")) {
             key primKey = llGetLinkKey(primId);
-            llWhisper(-9119,"lockguard " + (string)llList2Key(gSetChains,i + 1) + " " + lgMooring + " texture " + gTexture + " size " + (string)gXsize + " " + (string)gYsize + " gravity " + (string)gGravity + " life " + (string)gLife + " color " + (string)gRed + " " + (string)gGreen + " " + (string)gBlue + " link " + (string)primKey + " ping");
+            llWhisper(-9119,(((((((((((((((((((((("lockguard " + ((string)llList2Key(gSetChains,(i + 1)))) + " ") + lgMooring) + " texture ") + gTexture) + " size ") + ((string)gXsize)) + " ") + ((string)gYsize)) + " gravity ") + ((string)gGravity)) + " life ") + ((string)gLife)) + " color ") + ((string)gRed)) + " ") + ((string)gGreen)) + " ") + ((string)gBlue)) + " link ") + ((string)primKey)) + " ping"));
         }
-        gLmCalls += [lm_call + " ok",primId];
+        (gLmCalls += [(lm_call + " ok"),primId]);
     }
-    gLmCallsLength = llGetListLength(gLmCalls);
-    gTimerMode = 1;
+    (gLmCallsLength = llGetListLength(gLmCalls));
+    (gTimerMode = 1);
     llSetTimerEvent(3);
 }
 
 query_config(key avatarKey,list items){
     integer length = llGetListLength(items);
     integer i;
-    for (i = 0; i < length; i += 1) {
+    for ((i = 0); (i < length); (i += 1)) {
         list line = llParseString2List(llList2String(items,i),["="],[]);
         string item = llList2String(line,0);
-        if (item == "texture") gTexture = llList2String(line,1);
-        else  if (item == "xsize") gXsize = llList2Float(line,1);
-        else  if (item == "ysize") gYsize = llList2Float(line,1);
-        else  if (item == "gravity") gGravity = llList2Float(line,1);
-        else  if (item == "life") gLife = llList2Float(line,1);
-        else  if (item == "red") gRed = llList2Float(line,1);
-        else  if (item == "green") gGreen = llList2Float(line,1);
-        else  if (item == "blue") gBlue = llList2Float(line,1);
+        if ((item == "texture")) (gTexture = llList2String(line,1));
+        else  if ((item == "xsize")) (gXsize = llList2Float(line,1));
+        else  if ((item == "ysize")) (gYsize = llList2Float(line,1));
+        else  if ((item == "gravity")) (gGravity = llList2Float(line,1));
+        else  if ((item == "life")) (gLife = llList2Float(line,1));
+        else  if ((item == "red")) (gRed = llList2Float(line,1));
+        else  if ((item == "green")) (gGreen = llList2Float(line,1));
+        else  if ((item == "blue")) (gBlue = llList2Float(line,1));
     }
     set_particle();
     update_chains();
 }
 
 set_particle(){
-    gParticles = [5,<gXsize,gYsize,0.0>,6,<gXsize,gYsize,0.0>,7,gLife,8,<0.0,0.0,gGravity * -1>,12,gTexture,9,1,15,2,13,0.1,1,<gRed,gGreen,gBlue>,3,<gRed,gGreen,gBlue>,0,114];
+    (gParticles = [5,<gXsize,gYsize,0.0>,6,<gXsize,gYsize,0.0>,7,gLife,8,<0.0,0.0,(gGravity * -1)>,12,gTexture,9,1,15,2,13,0.1,1,<gRed,gGreen,gBlue>,3,<gRed,gGreen,gBlue>,0,114]);
 }
 // ============================================================
 default {
 
 	state_entry() {
-        gPrimIDs = [];
-        gSetChains = [];
-        gLmCalls = [];
-        gListenLMHandle = -1;
-        gListenLGHandle = -1;
+        (gPrimIDs = []);
+        (gSetChains = []);
+        (gLmCalls = []);
+        (gListenLMHandle = -1);
+        (gListenLGHandle = -1);
         integer number_of_prims = llGetNumberOfPrims();
         integer i;
-        for (i = 1; i < number_of_prims + 1; ++i) {
+        for ((i = 1); (i < (number_of_prims + 1)); (++i)) {
             string desc = llList2String(llGetLinkPrimitiveParams(i,[28]),0);
-            if (desc != "" && desc != "(No description)") {
-                if (-1 == llListFindList(gPrimIDs,[desc])) {
-                    gPrimIDs += [desc,i];
+            if (((desc != "") && (desc != "(No description)"))) {
+                if ((-1 == llListFindList(gPrimIDs,[desc]))) {
+                    (gPrimIDs += [desc,i]);
                 }
                 else  {
-                    llOwnerSay("/me Error: prim description " + desc + " isn't unique, please make it unique... ignoring");
+                    llOwnerSay((("/me Error: prim description " + desc) + " isn't unique, please make it unique... ignoring"));
                 }
             }
         }
@@ -211,57 +211,57 @@ default {
 
 
 	link_message(integer primId,integer commandId,string message,key avatarKey) {
-        if (commandId == 2733) {
+        if ((commandId == 2733)) {
             query_rem_chains(avatarKey,llParseStringKeepNulls(message,[gSET_SEPARATOR],[]));
         }
-        else  if (commandId == 2732) {
+        else  if ((commandId == 2732)) {
             query_set_chains(avatarKey,llParseStringKeepNulls(message,[gSET_SEPARATOR],[]));
         }
-        else  if (commandId == 2734) {
+        else  if ((commandId == 2734)) {
             query_config(avatarKey,llParseStringKeepNulls(message,[gSET_SEPARATOR],[]));
         }
     }
 
 	
 	listen(integer channel,string cuffName,key cuffKey,string message) {
-        if (channel == -9119) {
+        if ((channel == -9119)) {
             list s = llParseStringKeepNulls(message,[" "],[]);
             key avatar = llList2Key(s,1);
             string lgmooring = llList2String(s,2);
             integer index = llListFindList(gLM_TO_LG_MAPPINGS,[lgmooring]);
-            if (index != -1) {
-                string mooring = llList2String(gLM_TO_LG_MAPPINGS,index - 1);
-                string lm_call = (string)avatar + mooring + " ok";
-                integer i = llListFindList(gLmCalls,(list)lm_call);
-                if (~i) {
-                    integer i2 = llListFindList(gPrimIDs,[llList2Integer(gLmCalls,i + 1)]);
-                    string desc = llList2String(gPrimIDs,i2 - 1);
-                    gMissingChainPoints = ListItemDelete(gMissingChainPoints,desc);
+            if ((index != -1)) {
+                string mooring = llList2String(gLM_TO_LG_MAPPINGS,(index - 1));
+                string lm_call = ((((string)avatar) + mooring) + " ok");
+                integer i = llListFindList(gLmCalls,((list)lm_call));
+                if ((~i)) {
+                    integer i2 = llListFindList(gPrimIDs,[llList2Integer(gLmCalls,(i + 1))]);
+                    string desc = llList2String(gPrimIDs,(i2 - 1));
+                    (gMissingChainPoints = ListItemDelete(gMissingChainPoints,desc));
                 }
             }
         }
-        else  if (channel == -8888) {
+        else  if ((channel == -8888)) {
             integer i;
-            if (llGetSubString(message,-2,-1) == "ok") {
-                i = llListFindList(gLmCalls,(list)message);
-                if (~i) {
+            if ((llGetSubString(message,-2,-1) == "ok")) {
+                (i = llListFindList(gLmCalls,((list)message)));
+                if ((~i)) {
                     integer index = llListFindList(gLM_TO_LG_MAPPINGS,[llGetSubString(message,36,-4)]);
-                    llWhisper(-9119,"lockguard " + llGetSubString(message,0,35) + " " + llList2String(gLM_TO_LG_MAPPINGS,index + 1) + " unlink ");
-                    llLinkParticleSystem(llList2Integer(gLmCalls,i + 1),gParticles + [20,cuffKey]);
-                    llRegionSayTo((key)llGetSubString(message,0,35),-8888,llGetSubString(message,0,35) + "|LMV2|RequestPoint|" + llGetSubString(message,36,-4));
-                    gTimerMode = 1;
+                    llWhisper(-9119,(((("lockguard " + llGetSubString(message,0,35)) + " ") + llList2String(gLM_TO_LG_MAPPINGS,(index + 1))) + " unlink "));
+                    llLinkParticleSystem(llList2Integer(gLmCalls,(i + 1)),(gParticles + [20,cuffKey]));
+                    llRegionSayTo(((key)llGetSubString(message,0,35)),-8888,((llGetSubString(message,0,35) + "|LMV2|RequestPoint|") + llGetSubString(message,36,-4)));
+                    (gTimerMode = 1);
                     llSetTimerEvent(3);
-                    integer i2 = llListFindList(gPrimIDs,[llList2Integer(gLmCalls,i + 1)]);
-                    string desc = llList2String(gPrimIDs,i2 - 1);
-                    gMissingChainPoints = ListItemDelete(gMissingChainPoints,desc);
+                    integer i2 = llListFindList(gPrimIDs,[llList2Integer(gLmCalls,(i + 1))]);
+                    string desc = llList2String(gPrimIDs,(i2 - 1));
+                    (gMissingChainPoints = ListItemDelete(gMissingChainPoints,desc));
                 }
             }
             else  {
                 list temp = llParseString2List(message,["|"],[""]);
-                if (llList2String(temp,1) == "LMV2" && llList2String(temp,2) == "ReplyPoint") {
-                    i = llListFindList(gLmCalls,(list)(llList2String(temp,0) + llList2String(temp,3) + " ok"));
-                    if (~i) {
-                        llLinkParticleSystem(llList2Integer(gLmCalls,i + 1),gParticles + [20,(key)llList2String(temp,4)]);
+                if (((llList2String(temp,1) == "LMV2") && (llList2String(temp,2) == "ReplyPoint"))) {
+                    (i = llListFindList(gLmCalls,((list)((llList2String(temp,0) + llList2String(temp,3)) + " ok"))));
+                    if ((~i)) {
+                        llLinkParticleSystem(llList2Integer(gLmCalls,(i + 1)),(gParticles + [20,((key)llList2String(temp,4))]));
                     }
                 }
             }
@@ -270,19 +270,19 @@ default {
 
 
 	timer() {
-        if (gTimerMode == 1) {
+        if ((gTimerMode == 1)) {
             llSetTimerEvent(0.0);
             llListenRemove(gListenLMHandle);
-            gListenLMHandle = -1;
+            (gListenLMHandle = -1);
             llListenRemove(gListenLGHandle);
-            gListenLGHandle = -1;
-            gLmCalls = [];
+            (gListenLGHandle = -1);
+            (gLmCalls = []);
             if (llGetListLength(gMissingChainPoints)) {
-                gTimerMode = 2;
+                (gTimerMode = 2);
                 llSetTimerEvent(15);
             }
         }
-        else  if (gTimerMode == 2) {
+        else  if ((gTimerMode == 2)) {
             if (llGetListLength(gMissingChainPoints)) {
                 control_chains();
             }

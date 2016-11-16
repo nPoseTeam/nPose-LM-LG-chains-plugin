@@ -5,6 +5,9 @@ modified by pfil payne
 
 ## History
 
+`nPose LM/LG chains plugin v0.04`
+- allow the rootprim to be a leashpoint
+
 `nPose LM/LG chains plugin v0.02`
 - made the plugin usable for more then one victim
 - added LMv2 compatibility
@@ -43,6 +46,20 @@ modified by pfil payne
   1. The arb num 2733 is what the chains plugin is looking for and is interpreted as a command to stop chains.
   2. The next is a list of chain point.  In the above `NOTSATMSG` the plugin simply stops the chains at the chain points listed.
 6. Be sure to add the appropriate `PROP` lines in the `SET` card to rez these chain point props.
+
+### Particle Config
+1. Add a LINKMSG line:
+LINKMSG|2734|Parameter (Comma separated)
+
+With Parameters:
+- `texture=`particle texture as uuid
+- `xsize=`particle X size as float (0.03125 to 4.0)
+- `ysize=`particle Y size as float (0.03125 to 4.0)
+- `gravity=`particle gravity as float
+- `life=`particle life time as float in seconds
+- `red=` red part of the particle color as float (0 to 1)
+- `green=` green part of the particle color as float (0 to 1)
+- `blue=` blue part of the particle color as float (0 to 1)
 
 ## Notes
 This Plugin is expecting all Prim Descriptions to be unique. It will warn the owner when any are not unique. If the description isn't used as a Leash Point Name the warning can be ignored.
