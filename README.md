@@ -49,7 +49,7 @@ modified by pfil payne
 
 ### Particle Config
 1. Add a LINKMSG line:
-LINKMSG|2734|Parameter (Comma separated)
+LINKMSG|2734|Parameters (separated by "~")
 
 With Parameters:
 - `texture=`particle texture as uuid
