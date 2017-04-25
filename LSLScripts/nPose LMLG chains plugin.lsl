@@ -1,9 +1,9 @@
 // LSLScripts.nPose LMLG chains plugin.lslp 
-// 2017-04-25 20:32:22 - LSLForge (0.1.9.3) generated
+// 2017-04-25 20:39:16 - LSLForge (0.1.9.3) generated
 // Started at: 04.05.2013 17:04:00
 // Authors: XandrineX and Perl Nakajima
-// Modified from Pfil Payne: 
-// - make the Plugin usable for more then on victim
+// Modified by Pfil Payne: 
+// - make the Plugin usable for more than on victim
 // - add LMv2 compatibility
 // - scan for leashpoints, if the cuffs add later
 // - Particel config

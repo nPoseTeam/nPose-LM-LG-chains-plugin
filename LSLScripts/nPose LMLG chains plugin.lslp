@@ -1,7 +1,7 @@
 // Started at: 04.05.2013 17:04:00
 // Authors: XandrineX and Perl Nakajima
-// Modified from Pfil Payne: 
-// - make the Plugin usable for more then on victim
+// Modified by Pfil Payne: 
+// - make the Plugin usable for more than on victim
 // - add LMv2 compatibility
 // - scan for leashpoints, if the cuffs add later
 // - Particel config
