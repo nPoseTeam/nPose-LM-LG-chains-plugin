@@ -1,5 +1,5 @@
 // LSLScripts.nPose LMLG chains plugin.lslp 
-// 2017-04-25 20:39:16 - LSLForge (0.1.9.3) generated
+// 2018-03-23 15:32:56 - LSLForge (0.1.9.3) generated
 // Started at: 04.05.2013 17:04:00
 // Authors: XandrineX and Perl Nakajima
 // Modified by Pfil Payne: 

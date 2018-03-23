@@ -20,17 +20,20 @@ modified by pfil payne
 ## Setup
 ### Chains in the main build
 1.  Include the `nPose LM/LG chains plugin` script in the main build.
+1a. Include the `nPose SAT/NOTSAT plugin` script in the main build (if it doesn't already exists)
 2.  Add the chain points also to the build.
 3.  Make the description of each chain point unique so they can be referred to in nPose notecard.
-4.  Make a `SET` card and use `SATMSG` for telling the plugin to send chains and where they should go when someone sits this seat.  
-`SATMSG` in this form: `SATMSG|2732|leftloop~lcuff~rightloop~rcuff`
-  1. The arb num 2732 is what the chains plugin is looking for and is interpreted as a command to send chains.
-  2. The next is a list of chain point~cuff point matching pairs.  In the above `SATMSG` the pairs are as follows:  leftloop to lcuff, and rightloop to rcuff.
-  3. Chains are drawn from the chain point to the designated cuff (or vice versa). See references below for a list of cahin point names.
-5. Add a `NOTSATMSG` to drop chains when this person stands or changes pose sets.  
-  NOTSATMSG in this form: `SATMSG|2733|leftloop~rightloop`
-  1. The arb num 2733 is what the chains plugin is looking for and is interpreted as a command to stop chains.
-  2. The next is a list of chain point.  In the above `NOTSATMSG` the plugin simply stops the chains at the chain points listed.
+4.  Make a `SET` card and use `SATMSG` (nPose V3.00 or older) or `ON_SIT` (nPose V3.10 or newer) for telling the plugin to send chains and where they should go when someone sits this seat.  
+  `SATMSG` in this form: `SATMSG|2732|leftloop~lcuff~rightloop~rcuff` (nPose V3.00 or older)  
+  `ON_SIT` in this form: `ON_SIT|LINKMSG|2732|leftloop~lcuff~rightloop~rcuff` (nPose V3.10 or newer)
+    1. The arb num 2732 is what the chains plugin is looking for and is interpreted as a command to send chains.
+    2. The next is a list of chain point~cuff point matching pairs.  In the above `SATMSG` the pairs are as follows:  leftloop to lcuff, and rightloop to rcuff.
+    3. Chains are drawn from the chain point to the designated cuff (or vice versa). See references below for a list of cahin point names.
+5. Add a `NOTSATMSG` (nPose V3.00 or older) or `ON_UNSIT` (nPose V3.10 or newer) to drop chains when this person stands or changes pose sets.  
+  `NOTSATMSG` in this form: `SATMSG|2733|leftloop~rightloop`(nPose V3.00 or older)  
+  `ON_UNSIT` in this form `ON_UNSIT|LINKMSG|2733|leftloop~rightloop` (nPose V3.10 or newer)
+    1. The arb num 2733 is what the chains plugin is looking for and is interpreted as a command to stop chains.
+    2. The next is a list of chain point.  In the above `NOTSATMSG` the plugin simply stops the chains at the chain points listed.
 
 ### Chains in Props
 1. Include the `nPose LM/LG chains plugin` script in each prop intended to be used for chain points along with the prop plugin `nPose prop 0.1 (2.0 verified)`.
@@ -67,3 +70,26 @@ This Plugin is expecting all Prim Descriptions to be unique. It will warn the ow
 ## References for chain points:
 http://wiki.secondlife.com/wiki/LSL_Protocol/LockMeister_System  
 http://lslwiki.net/lslwiki/wakka.php?wakka=exchangeLockGuardItem
+
+
+
+
+
+# GERMAN
+## Setup
+### Ketten im Hauptobjekt
+1. Füge das Skript `nPose LM/LG chains plugin` dem Hauptobjekt hinzu.
+1a. Füge das Skript `nPose SAT/NOTSAT plugin` dem Hauptobjekt hinzu (falls noch nicht vorhanden).
+2. Füge für jede Kette dem Hauptobjekt ein Prim hinzu (nachfolgend "chain point" genannt).
+3. Jeder chain point braucht einen einmaligen Bezeichner, der in das Beschreibungsfeld des Prims einzutragen ist.
+4. Erstelle eine `SET:` Notecard und und benutze den `SATMSG` (nPose V3.00 oder älter) bzw. `ON_SIT` (nPose V3.10 oder neuer) um dem script mitzuteilen von wo nach wo eine Kette gezogen werden soll. Beispiel:  
+  `SATMSG|2732|leftloop~lcuff~rightloop~rcuff` (nPose V3.00 oder älter)  
+  `ON_SIT|LINKMSG|2732|leftloop~lcuff~rightloop~rcuff` (nPose V3.10 oder neuer)
+    1. Die Zahl 2732 sagt dem skript das es eine neue Kette anlegen soll
+    2. der Text danach ist eine liste mit chain point ~ cuff point namen, wobei wir den chain point namen bereits durch das eintragen im Beschreibungsfeld des chain points festgelegt haben (siehe Punkt 3.).
+    3. Die cuff point Namen entnehmen wir der Referenz.
+5. Füge der `SET:`NC eine weitere Zeile mit dem `NOTSAT` (nPose V3.00 oder älter) bzw. `ON_UNSIT` (nPose V3.10 oder neuer) hinzu. Beispiel:  
+  `SATMSG|2733|leftloop~rightloop` (nPose V3.00 oder älter)  
+  `ON_UNSIT|LINKMSG|2733|leftloop~rightloop` (nPose V3.10 oder neuer)
+    1. Die Zahl 2733 sagt dem plugin, dass es die Kette lösen soll
+    2. Der Text ist eine Liste mit Chain points (die wir bereits in 3. erstellt haben).
