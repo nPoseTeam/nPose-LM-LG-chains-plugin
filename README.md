@@ -9,7 +9,7 @@ modified by pfil payne
 - allow the rootprim to be a leashpoint
 
 `nPose LM/LG chains plugin v0.02`
-- made the plugin usable for more then one victim
+- made the plugin usable for more than one victim
 - added LMv2 compatibility
 - scan for leashpoints (cuffs that are attached after the initial particle command will be recognized)
 - added particle config
