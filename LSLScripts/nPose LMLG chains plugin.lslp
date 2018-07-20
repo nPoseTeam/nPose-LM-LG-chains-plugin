@@ -33,7 +33,10 @@ float   gBlue                         = 1;
 integer gCMD_SET_CHAINS               = 2732; // cmdId, set chains in msg
 integer gCMD_REM_CHAINS               = 2733; // cmdId, remove all chains
 integer gCMD_CONFIG                   = 2734; // cmdId, config in msg
+string  gSET_MAIN_SEPARATOR           = "|"; // separator from linkmessage
 string  gSET_SEPARATOR                = "~"; // separator from linkmessage
+integer gPLUGIN_COMMAND_REGISTER      = 310;
+
 
 // timer
 float   gControlTime                  = 15; // rescantimer, if leashpoints missing
@@ -290,6 +293,10 @@ default {
             }
         }
         set_particle();
+        llSleep(1.5);
+        llMessageLinked(LINK_SET, gPLUGIN_COMMAND_REGISTER, llDumpList2String(["CHAINS_ADD", gCMD_SET_CHAINS, 1, 0], "|"), "");
+        llMessageLinked(LINK_SET, gPLUGIN_COMMAND_REGISTER, llDumpList2String(["CHAINS_REMOVE", gCMD_REM_CHAINS, 1, 0], "|"), "");
+        llMessageLinked(LINK_SET, gPLUGIN_COMMAND_REGISTER, llDumpList2String(["CHAINS_CONFIG", gCMD_REM_CHAINS, 1, 0], "|"), "");
 //      gPrimIDs = llListSort( gPrimIDs, 2, TRUE );
 //      llOwnerSay( "PrimIDs: " + llDumpList2String( gPrimIDs, "\t" ) );
     }
@@ -298,17 +305,17 @@ default {
 
         if( commandId == gCMD_REM_CHAINS ) {    
             query_rem_chains( avatarKey,
-                llParseStringKeepNulls( message, [ gSET_SEPARATOR ], [] )
+                llParseStringKeepNulls( message, [ gSET_MAIN_SEPARATOR, gSET_SEPARATOR ], [] )
             );
         }
         else if( commandId == gCMD_SET_CHAINS ) {
             query_set_chains( avatarKey,
-                llParseStringKeepNulls( message, [ gSET_SEPARATOR ], [] )
+                llParseStringKeepNulls( message, [ gSET_MAIN_SEPARATOR, gSET_SEPARATOR ], [] )
             );                    
         }
         else if( commandId == gCMD_CONFIG ) {
             query_config( avatarKey,
-                llParseStringKeepNulls( message, [ gSET_SEPARATOR ], [] )
+                llParseStringKeepNulls( message, [ gSET_MAIN_SEPARATOR, gSET_SEPARATOR ], [] )
             );                    
         }
     }
