@@ -76,7 +76,7 @@ This Plugin is expecting all Prim Descriptions to be unique. It will warn the ow
 
 ## References for cuff point names:
 http://wiki.secondlife.com/wiki/LSL_Protocol/LockMeister_System  
-http://lslwiki.net/lslwiki/wakka.php?wakka=exchangeLockGuardItem
+https://web.archive.org/web/20130224185823/http://lslwiki.net/lslwiki/wakka.php?wakka=exchangeLockGuardItem
 
 
 

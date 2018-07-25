@@ -296,7 +296,7 @@ default {
         llSleep(1.5);
         llMessageLinked(LINK_SET, gPLUGIN_COMMAND_REGISTER, llDumpList2String(["CHAINS_ADD", gCMD_SET_CHAINS, 1, 0], "|"), "");
         llMessageLinked(LINK_SET, gPLUGIN_COMMAND_REGISTER, llDumpList2String(["CHAINS_REMOVE", gCMD_REM_CHAINS, 1, 0], "|"), "");
-        llMessageLinked(LINK_SET, gPLUGIN_COMMAND_REGISTER, llDumpList2String(["CHAINS_CONFIG", gCMD_REM_CHAINS, 1, 0], "|"), "");
+        llMessageLinked(LINK_SET, gPLUGIN_COMMAND_REGISTER, llDumpList2String(["CHAINS_CONFIG", gCMD_CONFIG, 1, 0], "|"), "");
 //      gPrimIDs = llListSort( gPrimIDs, 2, TRUE );
 //      llOwnerSay( "PrimIDs: " + llDumpList2String( gPrimIDs, "\t" ) );
     }
