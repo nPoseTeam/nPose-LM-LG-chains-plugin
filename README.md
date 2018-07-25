@@ -4,6 +4,8 @@ based on `plugin_lockmeister_lockguard v0.01` written by xandrinex
 modified by pfil payne
 
 ## History
+`nPose LM/LG chains plugin v1.01`
+- added CHAINS_ADD, CHAINS_REMOVE, CHAINS_CONFIG commands to be used with nPose V3.10 and newer
 
 `nPose LM/LG chains plugin v0.04`
 - allow the rootprim to be a leashpoint
