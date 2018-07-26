@@ -31,7 +31,7 @@ modified by pfil payne
     1. Replace "seatnumber" with the number of the seat
     2. The arb num 2732 is what the chains plugin is looking for and is interpreted as a command to send chains.
     3. The next is a list of chain point~cuff point matching pairs.  In the above `SATMSG` the pairs are as follows:  leftloop to lcuff, and rightloop to rcuff.
-    4. Chains are drawn from the chain point to the designated cuff (or vice versa). See references below for a list of cahin point names.
+    4. Chains are drawn from the chain point to the designated cuff (or vice versa). See references below for a list of chain point names.
 5. Add a `NOTSATMSG` (nPose V3.00 or older) or `ON_UNSIT` (nPose V3.10 or newer) to drop chains when this person stands or changes pose sets.  
   `NOTSATMSG` in this form: `NOTSATMSG|2733|leftloop~rightloop`(nPose V3.00 or older)  
   `ON_UNSIT` in this form `ON_UNSIT|seatnumber|CHAINS_REMOVE|leftloop~rightloop` (nPose V3.10 or newer)
@@ -77,7 +77,9 @@ With Parameters:
 This Plugin is expecting all Prim Descriptions to be unique. It will warn the owner when any are not unique. If the description isn't used as a Leash Point Name the warning can be ignored.
 
 ## References for cuff point names:
+The script uses LockMeister cuff point names (Mooring Points) which can be found here:  
 http://wiki.secondlife.com/wiki/LSL_Protocol/LockMeister_System  
+The next link is only for your info, you probably will not need it:
 https://web.archive.org/web/20130224185823/http://lslwiki.net/lslwiki/wakka.php?wakka=exchangeLockGuardItem
 
 
