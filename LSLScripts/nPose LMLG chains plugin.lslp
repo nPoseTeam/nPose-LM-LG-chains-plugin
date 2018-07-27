@@ -40,6 +40,7 @@ integer gPLUGIN_COMMAND_REGISTER      = 310;
 
 // timer
 float   gControlTime                  = 15; // rescantimer, if leashpoints missing
+integer gIdleMode                     = 0;
 integer gAddMode                      = 1;
 integer gControlMode                  = 2;
 
@@ -95,6 +96,7 @@ list    gSetChains;
 list    gMissingChainPoints;
 list    gParticles;
 integer gTimerMode;
+list gCommandStack;       //3-strided list: [cmdId, avatarKey, commandParamsString]
 
 // ============================================================
 list ListItemDelete(list mylist,string element_old) {
@@ -151,6 +153,7 @@ query_set_chains( key avatarKey, list items ) {
 
 query_rem_chains( key avatarKey, list descriptions ) {
     integer length = llGetListLength( descriptions );
+    integer lockGuardUsed;
     integer i;
     for( i=0; i < length; i+=1 ) {
         string description = llList2String( descriptions, i );
@@ -165,12 +168,17 @@ query_rem_chains( key avatarKey, list descriptions ) {
         //LockGuard
         index   = llListFindList( gSetChains, [ description ] );
         if( ~index ) {
+            lockGuardUsed=TRUE;
             llWhisper( gLOCKGUARD_CHANNEL, "lockguard " + (string)llList2Key( gSetChains, index + 1 ) + " "
             +  llList2String( gSetChains, index + 3 ) + " unlink" );
             gSetChains = llDeleteSubList( gSetChains, index, index + 3 );
         }
         //remove attachpoint from the missing list
         gMissingChainPoints = ListItemDelete( gMissingChainPoints, description );                 
+    }
+    if(lockGuardUsed) {
+        //to make sure that the cuffs removed all chains before we add some new, we need to add a small pause
+        llSleep(1.0);
     }
 }
 
@@ -270,6 +278,24 @@ set_particle() {
                         PSYS_PART_INTERP_SCALE_MASK
                 ];
 }
+
+executeCommands() {
+    while(gTimerMode!=gAddMode && llGetListLength(gCommandStack)) {
+        integer commandId=llList2Integer(gCommandStack, 0);
+        key avatarKey=llList2Key(gCommandStack, 1);
+        list params=llParseStringKeepNulls(llList2String(gCommandStack, 2), [ gSET_MAIN_SEPARATOR, gSET_SEPARATOR ], [] );
+        gCommandStack=llDeleteSubList(gCommandStack, 0, 2);
+        if( commandId == gCMD_REM_CHAINS ) {    
+            query_rem_chains( avatarKey, params);
+        }
+        else if( commandId == gCMD_SET_CHAINS ) {
+            query_set_chains( avatarKey, params);
+        }
+        else if( commandId == gCMD_CONFIG ) {
+            query_config( avatarKey, params);
+        }
+    }
+}
 // ============================================================
 default {
     state_entry() {
@@ -302,7 +328,11 @@ default {
     }
 
     link_message( integer primId, integer commandId, string message, key avatarKey ) {
-
+        if( commandId == gCMD_REM_CHAINS || commandId == gCMD_SET_CHAINS || commandId == gCMD_CONFIG) {
+            gCommandStack+=[commandId, avatarKey, message];
+            executeCommands();
+        }
+/*
         if( commandId == gCMD_REM_CHAINS ) {    
             query_rem_chains( avatarKey,
                 llParseStringKeepNulls( message, [ gSET_MAIN_SEPARATOR, gSET_SEPARATOR ], [] )
@@ -318,6 +348,7 @@ default {
                 llParseStringKeepNulls( message, [ gSET_MAIN_SEPARATOR, gSET_SEPARATOR ], [] )
             );                    
         }
+*/
     }
     
     listen( integer channel, string cuffName, key cuffKey, string message ) {
@@ -375,8 +406,8 @@ default {
     }
 
     timer() {
-        
         if ( gTimerMode == gAddMode ) {
+            gTimerMode = gIdleMode;
             llSetTimerEvent( 0.0 );
             llListenRemove( gListenLMHandle );
             gListenLMHandle = -1;
@@ -395,8 +426,12 @@ default {
             if ( llGetListLength( gMissingChainPoints ) ) {
                 control_chains();
             }
-            else llSetTimerEvent( 0.0 );
+            else {
+                gTimerMode = gIdleMode;
+                llSetTimerEvent( 0.0 );
+            }
         }
+        executeCommands();
     }
     
     on_rez(integer param) {
