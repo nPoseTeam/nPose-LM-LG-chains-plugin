@@ -40,19 +40,21 @@ modified by pfil payne
     3. The next is a list of chain point.  In the above `NOTSATMSG` the plugin simply stops the chains at the chain points listed.
 
 ### Chains in Props
+I didn't recommend using it with a nPose Version older than nPose V3.10.
 1. Include the `nPose LM/LG chains plugin` script in each prop intended to be used for chain points along with the prop plugin `nPose prop 0.1 (2.0 verified)`.
 2. Add the chain points also to the props if not using the root prim of the prop as the chain point.
 3. Make the description of each chain point unique so they can be referred to in nPose notecard. In this example we use `leftloop` and `rightloop`.
 4.  Make a `SET` card and use `SATMSG` (nPose V3.00 or older) or `ON_SIT` (nPose V3.10 or newer) for telling the plugin to send chains and where they should go when someone sits this seat.  
   `SATMSG` in this form: `SATMSG|2732|leftloop~lcuff~rightloop~rcuff` (nPose V3.00 or older)  
-  `ON_SIT` in this form `ON_SIT|seatnumber|CHAINS_ADD|leftloop~lcuff~rightloop~rcuff` (nPose V3.10 or newer)
+  `ON_SIT` in this form `ON_SIT|seatnumber|TIMER|chains|1|LINKMSG|2732|leftloop~lcuff~rightloop~rcuff` (nPose V3.10 or newer)
     1. Replace "seatnumber" with the number of the seat
     2. The arb num 2732 is what the chains plugin is looking for and is interpreted as a command to send chains.
     3. The next is a list of chain point~cuff point matching pairs. In the above `SATMSG` the pairs are as follows:  leftloop to lcuff, and rightloop to rcuff.
-    4. Chains are drawn from the chain point to the designated cuff (or vice versa). See references below for a list of cahin point names.
+    4. Chains are drawn from the chain point to the designated cuff (or vice versa). See references below for a list of chain point names.
+    5. The Timer is necessary to make sure that the Prop is fully rezzed before we are sending messages to it. You may change the name of the timer or the time as you wisch.
 5. Add a `NOTSATMSG` (nPose V3.00 or older) or `ON_UNSIT` (nPose V3.10 or newer) to drop chains when this person stands or changes pose sets.  
   `NOTSATMSG` in this form: `NOTSATMSG|2733|leftloop~rightloop`
-  `ON_UNSIT` in this form `ON_UNSIT|seatnumber|CHAINS_REMOVE|leftloop~rightloop` (nPose V3.10 or newer)
+  `ON_UNSIT` in this form `ON_UNSIT|seatnumber|LINKMSG|2733|leftloop~rightloop` (nPose V3.10 or newer)
     1. Replace "seatnumber" with the number of the seat
     2. The arb num 2733 is what the chains plugin is looking for and is interpreted as a command to stop chains.
     3. The next is a list of chain point.  In the above `NOTSATMSG` the plugin simply stops the chains at the chain points listed.
