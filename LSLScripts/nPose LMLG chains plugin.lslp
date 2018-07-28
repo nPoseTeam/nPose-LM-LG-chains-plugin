@@ -306,7 +306,7 @@ default {
         gListenLGHandle = -1;
         integer number_of_prims = llGetNumberOfPrims();
         integer i;
-        for( i=1; i < number_of_prims + 1; ++i ) { 
+        for( i=0; i < number_of_prims + 1; ++i ) { //Walk throug the whole linkset including a single prim
             string desc = llList2String( llGetLinkPrimitiveParams( i, [ PRIM_DESC ] ), 0 );
             if( desc != "" && desc != "(No description)" ) {
                 if( -1 == llListFindList( gPrimIDs, [ desc ] ) ) { // only accept unique descriptions
