@@ -15,7 +15,7 @@
 // blue    = blue part of the particle color as float (0 to 1)
 
 // --- configuration ---
-float   gLOCKMEISTER_RESPONSE_TIMEOUT = 3;
+float   gLOCKMEISTER_RESPONSE_TIMEOUT = 2.0;
 integer gLOCKMEISTER_CHANNEL          = -8888;
 integer gLOCKGUARD_CHANNEL            = -9119;
 
