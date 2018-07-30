@@ -178,7 +178,7 @@ query_rem_chains( key avatarKey, list descriptions ) {
     }
     if(lockGuardUsed) {
         //to make sure that the cuffs removed all chains before we add some new, we need to add a small pause
-        llSleep(1.0);
+        llSleep(0.5);
     }
 }
 
@@ -437,6 +437,13 @@ default {
     on_rez(integer param) {
         llResetScript();
     }
-    
+/*
+    changed(integer change) {
+        if (change & CHANGED_LINK) {
+            //TODO: it would be nice if we could reread the linknubers/descriptions if the user make changes in the linkset
+            //but this also triggers if someone just sit on the object
+        }
+    }
+*/
 } // default
 // ============================================================
