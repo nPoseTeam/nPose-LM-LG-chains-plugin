@@ -96,7 +96,7 @@ list    gSetChains;
 list    gMissingChainPoints;
 list    gParticles;
 integer gTimerMode;
-list gCommandStack;       //3-strided list: [cmdId, avatarKey, commandParamsString]
+list    gCommandQueue;    //3-strided list: [cmdId, avatarKey, commandParamsString]
 
 // ============================================================
 list ListItemDelete(list mylist,string element_old) {
@@ -280,19 +280,19 @@ set_particle() {
 }
 
 executeCommands() {
-    while(gTimerMode!=gAddMode && llGetListLength(gCommandStack)) {
-        integer commandId=llList2Integer(gCommandStack, 0);
-        key avatarKey=llList2Key(gCommandStack, 1);
-        list params=llParseStringKeepNulls(llList2String(gCommandStack, 2), [ gSET_MAIN_SEPARATOR, gSET_SEPARATOR ], [] );
-        gCommandStack=llDeleteSubList(gCommandStack, 0, 2);
+    while(gTimerMode!=gAddMode && llGetListLength(gCommandQueue)) {
+        integer commandId=llList2Integer(gCommandQueue, 0);
+        key avatarKey=llList2Key(gCommandQueue, 1);
+        list params=llParseStringKeepNulls(llList2String(gCommandQueue, 2), [ gSET_MAIN_SEPARATOR, gSET_SEPARATOR ], [] );
+        gCommandQueue=llDeleteSubList(gCommandQueue, 0, 2);
         if( commandId == gCMD_REM_CHAINS ) {    
-            query_rem_chains( avatarKey, params);
+            query_rem_chains(avatarKey, params);
         }
         else if( commandId == gCMD_SET_CHAINS ) {
-            query_set_chains( avatarKey, params);
+            query_set_chains(avatarKey, params);
         }
         else if( commandId == gCMD_CONFIG ) {
-            query_config( avatarKey, params);
+            query_config(avatarKey, params);
         }
     }
 }
@@ -329,7 +329,7 @@ default {
 
     link_message( integer primId, integer commandId, string message, key avatarKey ) {
         if( commandId == gCMD_REM_CHAINS || commandId == gCMD_SET_CHAINS || commandId == gCMD_CONFIG) {
-            gCommandStack+=[commandId, avatarKey, message];
+            gCommandQueue+=[commandId, avatarKey, message];
             executeCommands();
         }
 /*
