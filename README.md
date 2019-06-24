@@ -1,7 +1,10 @@
+If you want to download the scripts, please use this link: https://github.com/nPoseTeam/nPose-LM-LG-chains-plugin/releases/latest
+The master branch may or may not contain the latest released version.
+
 # nPose LM/LG chains plugin
 Allows you to use Lockmeister and Lockgueard particle chains.  
 based on `plugin_lockmeister_lockguard v0.01` written by xandrinex  
-modified by pfil payne
+modified by pfil payne, Leona (slmember1 Resident)
 
 ## Setup example
 ### Chains in the main build
@@ -27,7 +30,7 @@ I didn't recommend using it with a nPose Version older than nPose V3.10.
 1. Include the `nPose LM/LG chains plugin` script in each prop intended to be used for chain points along with the `nPose prop` plugin.
 2. Add the chain points also to the props if not using the root prim of the prop as the chain point.
 3. Make the description of each chain point unique so they can be referred to in nPose notecard. In this example we use `leftloop` and `rightloop`.
-4.  Make a `SET` card and use `SATMSG` (nPose V3.00 or older) or `ON_SIT` (nPose V3.10 or newer) for telling the plugin to send chains and where they should go when someone sits this seat.  
+4. Make a `SET` card and use `SATMSG` (nPose V3.00 or older) or `ON_SIT` (nPose V3.10 or newer) for telling the plugin to send chains and where they should go when someone sits this seat.  
   `SATMSG` in this form: `SATMSG|2732|leftloop~lcuff~rightloop~rcuff` (nPose V3.00 or older)  
   `ON_SIT` in this form `ON_SIT|seatnumber|TIMER|chains|1|LINKMSG|2732|leftloop~lcuff~rightloop~rcuff` (nPose V3.10 or newer)
     1. Replace "seatnumber" with the number of the seat
@@ -45,7 +48,8 @@ I didn't recommend using it with a nPose Version older than nPose V3.10.
 
 ### Particle Config
 1. Add a LINKMSG line:  
-`LINKMSG|2734|Parameters (separated by ~)`
+`LINKMSG|2734|Parameters (separated by ~)` (nPose V3.00 or older)
+`CHAINS_CONFIG|Parameters (separated by ~)` (nPose V3.10 or newer)
 
 With Parameters:
 - `texture=`particle texture as uuid (default value: 245ea72d-bc79-fee3-a802-8e73c0f09473 (metal chain))
@@ -71,6 +75,10 @@ The next link is only for your info, you probably will not need it:
 https://web.archive.org/web/20130224185823/http://lslwiki.net/lslwiki/wakka.php?wakka=exchangeLockGuardItem
 
 ## History
+`nPose LM/LG chains plugin v1.03` (upcoming version)
+- fixed #2 (allow multiple chains to one Lockmeister mooring point) (not lockguard compatible)
+- code cleanup
+
 `nPose LM/LG chains plugin v1.02`
 - fixed #1 (Chain is not working if the chain point is a single prim prop)
 - slightly improved particle generator
